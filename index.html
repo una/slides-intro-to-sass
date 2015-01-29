@@ -703,15 +703,15 @@ $blue: #00f;
         <!-- Control Directives -->
         <section>
           <section>
-            <h1>Control Directives</h1>
+            <h1>Control Directives & Functions</h1>
             <hr>
             <ul>
               <li>Lists</li>
-              <li>List Functions</li>
               <li>Maps</li>
               <li>@each loop</li>
               <li>@for loop</li>
-              <li>@while loop</li>
+              <li>Math</li>
+              <li>Color Functions</li>
             </ul>
           </section>
 
@@ -991,33 +991,6 @@ $colors: (
           </section>
 
           <section>
-            <h2>@while loop</h2>
-            <hr>
-            <blockquote>The @while loop has absolutely no use case in a real Sass project, especially since there is no way to break a loop from the inside. Do not use it.
-            <footer><a href="http://sass-guidelin.es/#while">Hugo Giraudel</a></footer>
-            </blockquote>
-            <ul class="bottom-links">
-            <h2>More Resources:</h2>
-              <li><a href="http://thesassway.com/intermediate/if-for-each-while">@if @for @each @while loops</a></li>
-            </ul>
-          </section>
-        </section>
-
-        <!-- Sass Math -->
-        <section>
-          <section>
-            <h1>Lets do Some Math & Play with Colors</h1>
-            <hr>
-            <ul>
-              <li>Supported Operators</li>
-              <li>Sass Math</li>
-              <li>Color Functions</li>
-              <li>Playing with Color</li>
-              <li>Mix > Lighten/Darken</li>
-            </ul>
-          </section>
-
-          <section>
             <h2>Supported Operators</h2>
             <hr>
             <div class="left">
@@ -1071,20 +1044,6 @@ $colors: (
           </section>
 
           <section>
-            <h2>Color Functions</h2>
-            <hr>
-            <div class="left">
-              <img src="img/func-rgb.png" alt="">
-            </div>
-            <div class="right">
-              <img src="img/func-opacity.png" alt="">
-            </div>
-            <div class="bottom">
-              <img src="img/func-color-other.png" alt="">
-            </div>
-          </section>
-
-          <section>
             <h2>Playing with Color</h2>
             <hr>
             <p data-height="466" data-theme-id="5255" data-slug-hash="hbqsB" data-default-tab="result" data-user="KatieK2" class='codepen'>See the Pen <a href='http://codepen.io/KatieK2/pen/hbqsB/'>Experiments with Sass Color Functions</a> by KatieK (<a href='http://codepen.io/KatieK2'>@KatieK2</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
@@ -1111,13 +1070,10 @@ $colors: (
             <ul>
               <li>Mixins + @content</li>
               <li>Mixins + Maps</li>
-              <li>@warn, @debug, and @error</li>
               <li>A Sassy Shape Mixin</li>
-              <li>Using Sassy Shapes</li>
-              <li>Extending Sass</li>
-              <li>@function</li>
-              <li>SassDoc</li>
               <li>Theming with Maps</li>
+              <li>Advanced Trigonometric Sass</li>
+              <li>Sass Weather App</li>
             </ul>
           </section>
 
@@ -1239,50 +1195,6 @@ $breakpoints: (
           </section>
 
           <section>
-            <h2>@warn, @debug, & @error</h2>
-            <hr>
-            <p>You can set up custom warnings for debugging your Sass.</p>
-            <pre><code class="scss">$breakpoints: (
-  small: 767px,
-  medium: 992px,
-  large: 1200px
-);
-
-@mixin smaller-than($point-name) {
-  @if map-has-key($breakpoints, $point-name) {
-    $width: map-get($breakpoints, $point-name);
-    @media (max-width: $width) {
-      @content;
-    }
-  }
-
-  @else {
-    @warn "We couldn't find #{$point-name} in the $breakpoints map! "
-        + "Please make sure it's defined. ";
-  }
-}
-
-.kitten-with-hat {
-  @include smaller-than(meow) {
-    background-color: $pink;
-  }
-}</code></pre>
-          </section>
-
-          <section>
-            <h2>@warn vs. @error</h2>
-            <hr>
-            <div class="left">
-              <h2 class="syntax-label">@warn</h2><br>
-              <img src="img/warn.png" alt="warn">
-            </div>
-            <div class="right">
-              <h2 class="syntax-label">@error</h2><br>
-              <img src="img/error.png" alt="error">
-            </div>
-          </section>
-
-          <section>
             <h2>Sassy Shapes Mixin</h2>
             <hr>
             <p>Mixins can take values and run logic loops.</p>
@@ -1296,116 +1208,6 @@ $breakpoints: (
             <p>Putting it to use.</p>
             <p data-height="450" data-theme-id="5255" data-slug-hash="ujLCs" data-default-tab="result" data-user="unax3" class='codepen'>See the Pen <a href='http://codepen.io/unax3/pen/ujLCs/'>Sassy CSS Puppy</a> by Una Kravets (<a href='http://codepen.io/unax3'>@unax3</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
             <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
-          </section>
-
-          <section>
-            <h2>Extending Sass</h2>
-            <hr>
-            <p>Ruby methods can be added to the Sass module</p>
-            <pre>
-              <code class="scss">module Sass::Script::Functions
-  def reverse(string)
-    assert_type string, :String
-    Sass::Script::Value::String.new(string.value.reverse)
-  end
-  declare :reverse, [:string]
-end</code></pre>
-
-            <ul class="bottom-links">
-            <h2>More Resources:</h2>
-              <li><a href="http://sass-lang.com/documentation/Sass/Script/Functions.html#adding_custom_functions">Adding Custom Functions</a></li>
-            </ul>
-          </section>
-
-          <section>
-            <h2>@function</h2>
-            <hr>
-            <p>Instead of outputting lines of Sass the way mixins do, functions return a value.</p>
-            <div class="left">
-              <h2 class="syntax-label">@mixin</h2>
-              <pre>
-                <code class="scss">// @mixin creation
-@mixin my-padding-mixin($some-number) {
-  padding: $some-number;
-}
-
-// Sass usage
-.my-module {
-  @include my-padding-mixin(10px);
-}
-
-// CSS output
-.my-module {
-  padding: 10px;
-}</code></pre>
-            </div>
-            <div class="right">
-              <h2 class="syntax-label">@function</h2>
-              <pre>
-                <code class="scss">// @function creation
-@function my-calculation-function($some-number, $another-number){
-  @return $some-number + $another-number
-}
-
-// Sass usage
-.my-module {
-  padding: my-calculation-function(10px, 5px);
-}
-
-// CSS output
-.my-module {
-  padding: 15px;
-}</code></pre>
-            </div>
-          </section>
-
-          <section>
-            <h2>SassDoc</h2>
-            <hr>
-            <p>A methodology for consistent documentation</p>
-            <pre><code class="scss">/// Mixin helping defining both `width` and `height` simultaneously.
-///
-/// @author Hugo Giraudel
-///
-/// @access public
-///
-/// @param {Length} $width - Element's `width`
-/// @param {Length} $height ($width) - Element's `height`
-///
-/// @example scss - Usage
-/// .foo {
-///   @include size(10em);
-/// }
-///
-/// .bar {
-///   @include size(100%, 10em);
-/// }
-///
-/// @example css - CSS output
-/// .foo {
-///   width: 10em;
-///   height: 10em;
-/// }
-///
-/// .bar {
-///   width: 100%;
-///   height: 10em;
-/// }
-@mixin size($width, $height: $width) {
-  width: $width;
-  height: $height;
-}</code></pre>
-            <ul class="bottom-links">
-            <h2>More Resources:</h2>
-              <li><a href="http://sassdoc.com/">Sass Doc Website</a></li>
-              <li><a href="https://github.com/SassDoc/sassdoc">SassDoc Repo on Github</a></li>
-            </ul>
-          </section>
-
-          <section class="center abs-center">
-          <h2>SassDoc</h2>
-          <hr>
-            <img src="img/sassdoc.png">
           </section>
 
           <section>
@@ -1544,64 +1346,38 @@ end</code></pre>
 }</code></pre>
           </section>
 
+            <section>
+              <h2>Advanced Trigonometric Functions</h2>
+              <hr>
+              <p data-height="538" data-theme-id="5255" data-slug-hash="kpCyx" data-default-tab="result" data-user="thebabydino" class='codepen'>See the Pen <a href='http://codepen.io/thebabydino/pen/kpCyx/'>Pure CSS 3D animated icosidodecahedron (pentagonal gyrobirotunda)</a> by Ana Tudor (<a href='http://codepen.io/thebabydino'>@thebabydino</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+              <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+              <ul class="bottom-links">
+              <h2>More Resources:</h2>
+                <li><a href="http://thesassway.com/advanced/inverse-trigonometric-functions-with-sass">Inverse Trig Functions in Sass</a></li>
+                <li><a href="https://unindented.org/articles/trigonometry-in-sass/">Trigonometry in Sass</a></li>
+              </ul>
+            </section>
+
+            <section>
+              <h2>Ana Tudor, FTW</h2>
+              <hr>
+              <p data-height="540" data-theme-id="5255" data-slug-hash="dvxgc" data-default-tab="result" data-user="thebabydino" class='codepen'>See the Pen <a href='http://codepen.io/thebabydino/pen/dvxgc/'>Cube truncation sequence (pure CSS 3D animation)</a> by Ana Tudor (<a href='http://codepen.io/thebabydino'>@thebabydino</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+              <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+              <ul class="bottom-links">
+              <h2>More Resources:</h2>
+                <li><a href="http://codepen.io/thebabydino/">More of Ana's Work on Codepen</a></li>
+              </ul>
+            </section>
+
+            <section>
+              <h2>Jackie Balzer</h2>
+              <hr>
+              <iframe src="//player.vimeo.com/video/86306814?color=ff006a" style="margin:0 auto; display:block;" width="900" height="600" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+          </section>
+
         </section>
 
         <!-- Thinking Outside the Box -->
-        <section>
-          <section>
-            <h1>Ladies Kicking Ass in Sass</h1>
-            <hr>
-            <ul>
-              <li>Ana Tudor & Advanced Trigonometric Sass</li>
-              <li>Jackie Balzar Builds a Weather App in Sass</li>
-              <li>Other Crazy Things People Do with Sass</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2>Advanced Trigonometric Functions</h2>
-            <hr>
-            <p data-height="538" data-theme-id="5255" data-slug-hash="kpCyx" data-default-tab="result" data-user="thebabydino" class='codepen'>See the Pen <a href='http://codepen.io/thebabydino/pen/kpCyx/'>Pure CSS 3D animated icosidodecahedron (pentagonal gyrobirotunda)</a> by Ana Tudor (<a href='http://codepen.io/thebabydino'>@thebabydino</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
-            <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
-            <ul class="bottom-links">
-            <h2>More Resources:</h2>
-              <li><a href="http://thesassway.com/advanced/inverse-trigonometric-functions-with-sass">Inverse Trig Functions in Sass</a></li>
-              <li><a href="https://unindented.org/articles/trigonometry-in-sass/">Trigonometry in Sass</a></li>
-            </ul>
-          </section>
-
-          <section>
-            <h2>Ana Tudor, FTW</h2>
-            <hr>
-            <p data-height="540" data-theme-id="5255" data-slug-hash="dvxgc" data-default-tab="result" data-user="thebabydino" class='codepen'>See the Pen <a href='http://codepen.io/thebabydino/pen/dvxgc/'>Cube truncation sequence (pure CSS 3D animation)</a> by Ana Tudor (<a href='http://codepen.io/thebabydino'>@thebabydino</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
-            <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
-            <ul class="bottom-links">
-            <h2>More Resources:</h2>
-              <li><a href="http://codepen.io/thebabydino/">More of Ana's Work on Codepen</a></li>
-            </ul>
-          </section>
-
-          <section>
-            <h2>Jackie Balzer</h2>
-            <hr>
-            <iframe src="//player.vimeo.com/video/86306814?color=ff006a" style="margin:0 auto; display:block;" width="900" height="600" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-        </section>
-
-        <section>
-          <h2>Sass + JSON</h2>
-            <li><a href="http://css-tricks.com/making-sass-talk-to-javascript-with-json/">CSS Tricks: Sass w/Javascript with JSON</a></li>
-            <li><a href="http://hugogiraudel.com/2014/01/20/json-in-sass/">SassyJson Library</a></li>
-            <li><a href="http://viget.com/extend/sharing-data-between-sass-and-javascript-with-json">Sharing Data Between Sass & JS with JSON</a></li>
-            <br>
-          <h2>Algorithms & Math</h2>
-            <li><a href="https://github.com/HugoGiraudel/SassyMatrix">Sassy Matrix</a></li>
-            <li><a href="https://github.com/HugoGiraudel/SassySort">Sassy Sort</a></li>
-            <br>
-          <h2>Grid Systems</h2>
-            <li><a href="https://github.com/at-import/Singularity">Singularity</a></li>
-            <li><a href="http://susy.oddbird.net/">Susy</a></li>
-          </ul>
-        </section>
 
         <section>
           <h1>More Resources</h1>
