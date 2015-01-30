@@ -297,7 +297,6 @@
               <li>Selector Inheritance & @extend</li>
               <li>Placeholder Selectors</li>
               <li>Partials & @import</li>
-              <li>Mixins & @include</li>
             </ul>
           </section>
 
@@ -309,8 +308,11 @@
             <pre>
               <code class="scss">#sidebar
   width: 30%
-  background-color: #faa</code>
+  background-color: #faa
+  </code>
             </pre>
+            <li>Variables: <strong>!</strong></li>
+            <li>Assignment: <strong>=</strong></li>
             </div>
 
             <div class="right">
@@ -321,11 +323,23 @@
   background-color: #faa;
 }</code>
                         </pre>
+            <ul>
+              <li>Variables: <strong>$</strong></li>
+              <li>Assignment: <strong>:</strong></li>
+            </ul>
             </div>
+            <div style="height: 100px; clear:both"></div>
             <ul class="bottom-links">
             <h2>More Resources:</h2>
               <li><a href="http://robots.thoughtbot.com/sass-variables">scss vs. sass</a></li>
+              <li><a href="http://sass-guidelin.es/#sass-or-scss">Sass Guidelines</a></li>
+              <li><a href="http://www.sitepoint.com/whats-difference-sass-scss/">The Difference Between Sass & Scss</a></li>
             </ul>
+            <aside class="notes">
+            <li>Initially, Sass was part of another preprocessor - Haml</li>
+            <li>designed & written by Ruby devs.</li>
+            <li> Originally a Ruby-like syntax w/o braces, no semi-colons and a strict indentation</li>
+            </aside>
           </section>
 
           <section>
@@ -514,8 +528,45 @@ h2 {
             </ul>
           </section>
 
-          <section class="text-center abs-center">
+          <section class="text-center">
             <img src="img/ampersand.gif" height="570" width="790" alt="Ampersand gif">
+          </section>
+
+          <section>
+            <h2>The Trailing Ampersand</h2>
+            <hr>
+                        <div class="left">
+            <h2 class="syntax-label">.scss</h2>
+            <pre>
+              <code class="scss">.unicorn {
+  .set-one & {
+    display: none;
+  }
+}
+
+.button--large {
+  .sidebar & {
+    font-size: 80%;
+  }
+}</code></pre>
+            </div>
+
+            <div class="right">
+            <h2 class="syntax-label">.css output</h2>
+            <pre>
+              <code class="css">.set-one .unicorn {
+  display: none;
+}
+
+.sidebar .button--large {
+  font-size: 80%;
+}</code></pre>
+            </div>
+            <ul class="bottom-links fragment">
+              <h2>More Resources:</h2>
+                <li><a href="http://una.github.io/2014/03/06/sass-snippets-the-almighty-ampersand.html">The Almighty Ampersand</a></li>
+                <li><a href="http://chipcullen.com/sass-trailing-ampersand-modular-code/">Sass Trailing Ampersand</a></li>
+              </ul>
           </section>
 
           <section>
@@ -656,6 +707,18 @@ $blue: #00f;
               <li><a href="http://zurb.com/university/lessons/35">Wrangling Sass @import files</a></li>
             </ul>
           </section>
+        </section>
+
+        <section>
+
+          <section>
+            <h1>Using Mixins</h1>
+            <hr>
+            <li>Mixins & @include</li>
+            <li>Mixins & arguments</li>
+            <li>The arglist...</li>
+            <li>Mixins & @content</li>
+          </section>
 
           <section>
             <h2>Mixins & @include</h2>
@@ -720,6 +783,82 @@ $blue: #00f;
 </code></pre>
 </div>
           </section>
+
+          <section>
+            <h2>The Arglist</h2>
+            <hr>
+            <pre><code class="scss">@mixin shadows($shadows...) {
+  box-shadow: $shadows;
+}</code></pre>
+          <ul class="bottom-links">
+          <h2>More Resources:</h2>
+            <li><a href="http://www.sitepoint.com/sass-multiple-arguments-lists-or-arglist/">Sass Arglist</a></li>
+          </ul>
+
+
+            <aside class="notes">
+              <li>the "..." denotes any number of args will be accepted</li>
+              <li>Not many use cases</li>
+              <li>box-shadow, gradients</li>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Mixins and @content</h2>
+            <hr>
+            <p>Mixins can take a variety of args, including <code>@content</code> blocks.</p>
+            <div class="left">
+              <h2 class="syntax-label">.scss</h2>
+              <pre>
+              <code class="scss">//mixin
+@mixin smaller-than($width) {
+  @media (max-width: $width) {
+    @content;
+  }
+}
+
+@mixin larger-than($width) {
+  @media (min-width: $width) {
+    @content;
+  }
+}
+
+//usage
+.heading {
+  font-size: 2em;
+  @include smaller-than(300px) {
+    font-size: 1.5em;
+  }
+  @include larger-than(768px) {
+    font-size: 3em;
+  }
+}</code></pre>
+            </div>
+
+            <div class="right">
+            <h2 class="syntax-label">.css output</h2>
+            <pre>
+              <code class="css">.heading {
+  font-size: 2em;
+}
+@media (max-width: 300px) {
+  .heading {
+    font-size: 1.5em;
+  }
+}
+@media (min-width: 768px) {
+  .heading {
+    font-size: 3em;
+  }
+}</code></pre>
+            </div>
+
+            <ul class="bottom-links">
+            <h2>More Resources:</h2>
+              <li><a href="http://jshak.es/media-queries-in-sass/">Media Queries in Sass</a></li>
+            </ul>
+          </section>
+
         </section>
 
         <!-- Control Directives -->
@@ -846,6 +985,12 @@ $blue: #00f;
           </section>
 
           <section>
+          <h2>@each loop</h2>
+          <hr>
+            <img src="img/color-scheme.png" alt="color scheme">
+          </section>
+
+          <section>
             <h2>@each loop</h2>
             <hr>
             <div class="left">
@@ -926,12 +1071,6 @@ $colors: (
 </code>
               </pre>
             </div>
-          </section>
-
-          <section>
-          <h2>@each loop</h2>
-          <hr>
-            <img src="img/color-scheme.png" alt="color scheme">
           </section>
 
           <section>
@@ -1090,68 +1229,11 @@ $colors: (
             <h1>Pulling it Together</h1>
             <hr>
             <ul>
-              <li>Mixins + @content</li>
               <li>Mixins + Maps</li>
               <li>A Sassy Shape Mixin</li>
               <li>Theming with Maps</li>
               <li>Advanced Trigonometric Sass</li>
               <li>Sass Weather App</li>
-            </ul>
-          </section>
-
-          <section>
-            <h2>Mixins and @content</h2>
-            <hr>
-            <p>Mixins can take a variety of args, including <code>@content</code> blocks.</p>
-            <div class="left">
-              <h2 class="syntax-label">.scss</h2>
-              <pre>
-              <code class="scss">//mixin
-@mixin smaller-than($width) {
-  @media (max-width: $width) {
-    @content;
-  }
-}
-
-@mixin larger-than($width) {
-  @media (min-width: $width) {
-    @content;
-  }
-}
-
-//usage
-.heading {
-  font-size: 2em;
-  @include smaller-than(300px) {
-    font-size: 1.5em;
-  }
-  @include larger-than(768px) {
-    font-size: 3em;
-  }
-}</code></pre>
-            </div>
-
-            <div class="right">
-            <h2 class="syntax-label">.css output</h2>
-            <pre>
-              <code class="css">.heading {
-  font-size: 2em;
-}
-@media (max-width: 300px) {
-  .heading {
-    font-size: 1.5em;
-  }
-}
-@media (min-width: 768px) {
-  .heading {
-    font-size: 3em;
-  }
-}</code></pre>
-            </div>
-
-            <ul class="bottom-links">
-            <h2>More Resources:</h2>
-              <li><a href="http://jshak.es/media-queries-in-sass/">Media Queries in Sass</a></li>
             </ul>
           </section>
 
